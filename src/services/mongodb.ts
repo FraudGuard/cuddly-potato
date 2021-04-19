@@ -1,7 +1,7 @@
 import { Db, MongoClient } from 'mongodb';
+require('dotenv').config()
 
-const url = "mongodb+srv://crawler:DyZh0E6bOsI69FYv@cluster0.ljnuh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-
+const url = process.env.MONGO_URL ?? ''
 let connection: Db
 
 export const init = () => new Promise(resolve => {
