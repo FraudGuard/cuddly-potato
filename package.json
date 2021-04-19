@@ -7,22 +7,20 @@
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "install": "^0.13.0",
-    "mongodb": "^3.6.5",
-    "npm": "^7.10.0",
-    "typescript": "^4.2.3"
+    "mongodb": "^3.6.5"
   },
   "devDependencies": {
     "@types/mongodb": "^3.6.10",
     "nodemon": "^2.0.7",
     "rimraf": "^3.0.2",
-    "ts-node": "^9.1.1"
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
   },
   "scripts": {
     "start": "npm run build && node build/index.js",
     "start:dev": "nodemon",
-    "build": "rimraf ./build && tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rimraf ./build && tsc"
   },
   "author": "",
-  "license": "ISC"
+  "license": ""
 }
