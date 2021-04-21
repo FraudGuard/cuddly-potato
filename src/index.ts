@@ -14,10 +14,10 @@ const init = async () => {
   console.log('lego done', resLego);
 
   const listDyson = await getList(
-    `&q=${encodeURIComponent('dyson airwrap')}&minPrice=150.00`
+    `&q=${encodeURIComponent('dyson')}&minPrice=150.00`
   );
   console.log('list loaded');
-  const resDyson = await handleList(list, 'dyson');
+  const resDyson = await handleList(listDyson, 'dyson_fix');
   console.log('dyson done', resDyson);
 
   if (resLego.errors > 0 || resDyson.errors > 0) {
@@ -39,6 +39,7 @@ const handleList = async (list: any[], searchQuery: string) => {
       console.log('errorGetSingle', err.message);
       ++errors;
     });
+    console.log('element', element)
     if (element) {
       ++success;
       await mongodb.insertOrUpdateAd({ ...element, searchQuery });
