@@ -1,19 +1,14 @@
 import { Db, MongoClient } from 'mongodb';
-import dotenv from 'dotenv';
-const result = dotenv.config();
-if (result.error !== undefined) {
-  throw result.error;
-}
 
-const url = process.env.MONGO_URL ?? '';
-let connection: Db;
+export let connection: Db;
 
-export const init = () =>
+export const init = (env: any) =>
   new Promise((resolve) => {
     if (connection) {
       return resolve(connection);
     }
-    console.log('startInit');
+    const url = env.MONGO_URL ?? '-';
+    console.log('startInit:', url);
     MongoClient.connect(url, { useUnifiedTopology: true }, (err, db) => {
       if (err) {
         console.log('init Error');

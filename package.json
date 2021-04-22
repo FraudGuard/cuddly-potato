@@ -10,6 +10,7 @@
     "mongodb": "^3.6.5"
   },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/mongodb": "^3.6.10",
     "nodemon": "^2.0.7",
     "rimraf": "^3.0.2",

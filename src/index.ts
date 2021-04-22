@@ -1,12 +1,22 @@
+import dotenv from 'dotenv';
 import { getList } from './requests/getList';
 import { getSingle } from './requests/getSingle';
 import * as mongodb from './services/mongodb';
 import axios from 'axios';
+const result = dotenv.config({ path: __dirname + '/../.env' });
+if (result.error !== undefined) {
+  throw result.error;
+}
 
 const init = async () => {
-  await mongodb.init();
+  await mongodb.init(process.env);
+  
   // await mongodb.dropAndCreateCollection('ads')
+  // await dysonToLego()
+  // console.log('done')
+
   const list = await getList(
+    process.env,
     `&q=${encodeURIComponent('lego')}&minPrice=150.00`
   );
   console.log('list loaded');
@@ -14,6 +24,7 @@ const init = async () => {
   console.log('lego done', resLego);
 
   const listDyson = await getList(
+    process.env,
     `&q=${encodeURIComponent('dyson')}&minPrice=150.00`
   );
   console.log('list loaded');
@@ -35,7 +46,7 @@ const handleList = async (list: any[], searchQuery: string) => {
   let success = 0;
   let errors = 0;
   for (const l of list) {
-    const element = await getSingle(l.id).catch((err) => {
+    const element = await getSingle(process.env, l.id).catch((err) => {
       console.log('errorGetSingle', err.message);
       ++errors;
     });
@@ -84,3 +95,11 @@ async function postMessageToTeams(title: string, message: string) {
 }
 
 init();
+
+
+const dysonToLego = async () => {
+  var myquery = { searchQuery: 'dyson' };
+  var newvalues = { $set: { searchQuery: "lego" } };
+  const res = await mongodb.connection.collection("ads").updateMany(myquery, newvalues)
+  console.log(res.result.nModified + " document(s) updated");
+}
